@@ -308,8 +308,8 @@ if media_type == 'image':
 
 	# SETTING 
 
-	notify("Boldly go where only aliens have gone before", title, "Background image has been set.", "Submarine")
-
+	notify("Boldly go where only aliens have gone before", title.replace("'", ""), "Background image has been set.", "Submarine")
+	
 else:
 
 	notify("Space, the final frontier!", "Apparently, there is no new image today.", "Try investing in space travel or something.", "Basso")
