@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>local.getspace</string>
+	<key>Program</key>
+	<string>/Users/USERNAME/.bin/getspace.osx.py</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/local.getspace.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/local.getspace.stdout</string>
+	<key>StartInterval</key>
+	<integer>3600</integer>
+	<key>NetworkState</key>
+	<true/>
+	<key>SuccessfulExit</key>
+	<true/>
+</dict>
+</plist>
