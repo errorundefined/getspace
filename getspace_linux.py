@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+# REQUIREMENTS
+# in order to get txt info on the image, you need to do:
+#
+# $ apt-get install python-pillow
+#
+# if this is not done, the image (without info) is still being set as new background
+
 # ubuntu version
 
 # - needs font definitions
@@ -46,5 +53,11 @@
 #             print "An error ocurred while setting a new wallpaper."
 
 
-def printsometing():
-    print 'Linux'
+# for notification, defferenciate between kde and unitiy?
+
+# http://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment
+
+# kdialog --passivepopup
+# unitiy notify-send?
+# https://wiki.ubuntuusers.de/Benachrichtigungsdienst/
+# https://wiki.ubuntuusers.de/KDialog/
