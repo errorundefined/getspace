@@ -1,63 +1,105 @@
 #!/usr/bin/env python
 
-# REQUIREMENTS
-# in order to get txt info on the image, you need to do:
-#
-# $ apt-get install python-pillow
-#
-# if this is not done, the image (without info) is still being set as new background
+import os
+import subprocess
 
-# ubuntu version
+def dosetbackground(path):
 
-# - needs font definitions
-# - needs screensize function
-# - neeeds desktop background function
-# - needs os specific notifications
+	# http://stackoverflow.com/questions/32264960/how-to-use-change-desktop-wallpaper-using-python-in-ubuntu-14-04-with-unity
+	# http://askubuntu.com/questions/85162/how-can-i-change-the-wallpaper-using-a-python-script
 
-# - should be module:
+	# https://gist.github.com/mtrovo/1110370
+	#!/usr/bin/env python
+	#-*- coding:utf-8 -*-
 
-# 	function checking for osx / linux? and conditionally including the above depending on enviorenment?
+	# import commands
+	# import os.path
+	# from sys import argv
 
-# http://askubuntu.com/questions/108764/how-do-i-send-text-messages-to-the-notification-bubbles
-# http://askubuntu.com/questions/187022/how-can-i-send-a-custom-desktop-notification
-
-# http://stackoverflow.com/questions/32264960/how-to-use-change-desktop-wallpaper-using-python-in-ubuntu-14-04-with-unity
-# http://stackoverflow.com/questions/8220108/how-do-i-check-the-operating-system-in-python
-# http://askubuntu.com/questions/85162/how-can-i-change-the-wallpaper-using-a-python-script
-
-# https://gist.github.com/mtrovo/1110370
-#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-# import commands
-# import os.path
-# from sys import argv
-
-# def set_gnome_wallpaper(file_path):
-#     command = "gconftool-2 --set \
-#             /desktop/gnome/background/picture_filename \
-#             --type string '%s'" % file_path
-#     status, output = commands.getstatusoutput(command)
-#     return status
+	# def set_gnome_wallpaper(file_path):
+	#     command = "gconftool-2 --set \
+	#             /desktop/gnome/background/picture_filename \
+	#             --type string '%s'" % file_path
+	#     status, output = commands.getstatusoutput(command)
+	#     return status
 
 
 
-# if __name__ == '__main__':
-#     if len(argv) <= 1:
-#         print "usage: %s img_path" % argv[0]
-#     else:
-#         img_path = os.path.abspath(argv[1])
-#         if not set_gnome_wallpaper(img_path):
-#             print "Wallpaper changed with success."
-#         else:
-#             print "An error ocurred while setting a new wallpaper."
+	# if __name__ == '__main__':
+	#     if len(argv) <= 1:
+	#         print "usage: %s img_path" % argv[0]
+	#     else:
+	#         img_path = os.path.abspath(argv[1])
+	#         if not set_gnome_wallpaper(img_path):
+	#             print "Wallpaper changed with success."
+	#         else:
+	#             print "An error ocurred while setting a new wallpaper."
+
+def notify(title, subtitle, text, kind):
+
+	# CHECK FOR COMMON NOTIFICATION SERVERS
+
+	notifysrv = False
+
+	# CHECK FOR NOTIFY-SEND
+	try:
+		subprocess.call(['notify-send'])
+	except OSError as e:
+		if e.errno == os.errno.ENOENT:
+			pass
+	else:
+		notifysrv = 'notify-send'
+
+	# CHECK FOR KDIALOG
+	if not notifysrv:
+		try:
+			subprocess.call(['kdialog'])
+		except OSError as e:
+			if e.errno == os.errno.ENOENT:
+				print 'No compatible notification server found.'
+		else:
+			notifysrv = 'kdialog'
+
+	# PREPARE VARS WITH DOUBLE TICKS
+	if notifysrv:
+		quotes = '"'
+		title = quotes + title + quotes
+		text = quotes + text + quotes
+
+	# SEND A NOTIFICATION TO THE notifysrv FOUND
+	# PREPARE FOR AND SENT TO notify-send
+	if notifysrv == 'notify-send'
+
+		if kind == 'error':
+			urgency = '-u critical'
+		else:
+			urgency = '-u normal'
+
+		# or subprocess.Popen?
+		subprocess.call(['notify-send', urgency, '-t 500', title, text])
+
+	# OR PREPARE FOR AND SENT TO kdialog
+	elif notifysrv == 'kdialog'
+
+		# or subprocess.Popen?
+		subprocess.call(['kdialog', '--passivepopup', '--title', title, text, 5])
+
+def getscreensize():
+
+	# add stuff
+	# http://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment
 
 
-# for notification, defferenciate between kde and unitiy?
+def getfontvars(height, explanation):
 
-# http://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment
+	from PIL import ImageFont
+	from math import floor
+	import textwrap
 
-# kdialog --passivepopup
-# unitiy notify-send?
-# https://wiki.ubuntuusers.de/Benachrichtigungsdienst/
-# https://wiki.ubuntuusers.de/KDialog/
+	# SET SIZING VARS
+	fsizehead = int(floor(height / 36))
+	fsizetext = int(floor(height / 65))
+	wrapped = textwrap.fill(explanation, 100)
+	# SET FONT VARS
+	headfont = ImageFont.truetype("/Library/Fonts/Futura.ttc",fsizehead,index=2)
+	textfont = ImageFont.truetype("/System/Library/Fonts/Avenir.ttc",fsizetext)
