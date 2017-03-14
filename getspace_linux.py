@@ -68,7 +68,7 @@ def notify(title, subtitle, text, kind):
 
 	# SEND A NOTIFICATION TO THE notifysrv FOUND
 	# PREPARE FOR AND SENT TO notify-send
-	if notifysrv == 'notify-send'
+	if notifysrv == 'notify-send':
 
 		if kind == 'error':
 			urgency = '-u critical'
@@ -79,7 +79,7 @@ def notify(title, subtitle, text, kind):
 		subprocess.call(['notify-send', urgency, '-t 500', title, text])
 
 	# OR PREPARE FOR AND SENT TO kdialog
-	elif notifysrv == 'kdialog'
+	elif notifysrv == 'kdialog':
 
 		# or subprocess.Popen?
 		subprocess.call(['kdialog', '--passivepopup', '--title', title, text, 5])
