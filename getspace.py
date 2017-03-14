@@ -88,7 +88,7 @@ if media_type == 'image':
 	try:
 		import PIL
 	except ImportError, e:
-		getspace.notify("Please read the source code.", "This thing requires a spaceship.", "So, no space info on the desktop for you.", "Basso")
+		getspace.notify("Please read the source code.", "This thing requires a spaceship.", "So, no space info on the desktop for you.", "error")
 		pass
 	else:
 
@@ -207,8 +207,8 @@ if media_type == 'image':
 
 	# SETTING 
 
-	getspace.notify("Boldly go where only aliens have gone before", title.replace("'", ""), "Background image has been set.", "Submarine")
+	getspace.notify("Boldly go where only aliens have gone before", title.replace("'", ""), "Background image has been set.", "success")
 	
 else:
 
-	getspace.notify("Space, the final frontier!", "Apparently, there is no new image today.", "Try investing in space travel or something.", "Basso")
+	getspace.notify("Space, the final frontier!", "Apparently, there is no new image today.", "Try investing in space travel or something.", "error")

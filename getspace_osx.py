@@ -2,43 +2,13 @@
 
 import os
 
-# OSX SET BACKGROUND
-def dosetbackground(path):
-	# ######
-	# APPLESCRIPT SOLUTION 1
-	# does not seem to change more than 1 desktop
-	# ######
-	# setbackgroundcmd = """
-	# osascript -e 'tell application "System Events" to set picture of every desktop to ("{}" as POSIX file as alias)'
-	# """
-
-	# ######
-	# APPLESCRIPT SOLUTION 2
-	# does not seem to change more than 1 desktop
-	# ######
-	# setbackgroundcmd = """
-	# osascript -e 'tell application "System Events"
-	# set desktopCount to count of desktops
-	# repeat with desktopNumber from 1 to desktopCount
-	# 	tell desktop desktopNumber
-	# 		set picture to "{}"
-	# 	end tell
-	# end repeat
-	# end tell'
-	# """.format(path)
-
-	# ######
-	# SQLITE SOLUTION
-	# seems to be working though it uses killall Dock and all desktops have to be created from the first
-	# ######
-	setbackgroundcmd = """
-	sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '{}'" && killall Dock
-	""".format(path)
-
-	os.popen(setbackgroundcmd)
-
 # OSX NOTIFICATION FUNCTION
-def notify(title, subtitle, text, sound):
+def notify(title, subtitle, text, kind):
+
+	if kind == 'success':
+		sound = 'Submarine'
+	else:
+		sound = 'Basso'
 
 	os.system("""
 		osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'
@@ -106,6 +76,42 @@ def getfontvars(height, explanation):
 	# textfont = ImageFont.truetype("/System/Library/Fonts/SFCompactText-Light.otf",fsizetext)
 
 	return (fsizehead, fsizetext, wrapped, headfont, textfont)
+
+
+# OSX SET BACKGROUND
+def dosetbackground(path):
+	# ######
+	# APPLESCRIPT SOLUTION 1
+	# does not seem to change more than 1 desktop
+	# ######
+	# setbackgroundcmd = """
+	# osascript -e 'tell application "System Events" to set picture of every desktop to ("{}" as POSIX file as alias)'
+	# """
+
+	# ######
+	# APPLESCRIPT SOLUTION 2
+	# does not seem to change more than 1 desktop
+	# ######
+	# setbackgroundcmd = """
+	# osascript -e 'tell application "System Events"
+	# set desktopCount to count of desktops
+	# repeat with desktopNumber from 1 to desktopCount
+	# 	tell desktop desktopNumber
+	# 		set picture to "{}"
+	# 	end tell
+	# end repeat
+	# end tell'
+	# """.format(path)
+
+	# ######
+	# SQLITE SOLUTION
+	# seems to be working though it uses killall Dock and all desktops have to be created from the first
+	# ######
+	setbackgroundcmd = """
+	sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '{}'" && killall Dock
+	""".format(path)
+
+	os.popen(setbackgroundcmd)
 
 # ADD FUNCTION FOR CHANGING ADMIN LOGIN PNG
 # dosetbackground(savein)
