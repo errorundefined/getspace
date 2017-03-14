@@ -5,7 +5,7 @@
 	<key>Label</key>
 	<string>local.getspace</string>
 	<key>Program</key>
-	<string>/Users/USERNAME/.bin/getspace.osx.py</string>
+	<string>/Users/USERNAME/.bin/getspace.py</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
