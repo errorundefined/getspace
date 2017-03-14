@@ -1,5 +1,19 @@
-# getspace – Python script using NASA's Astronomy Picture of the Day API
-APOD wallpaper command line client written in Python (it even put's info text on the picture)
+# GetSpace – APOD wallpaper
+Change your wallpaper to today's Astronomy Picture of the Day, everyday – along with a brief explanation.
+
+## Todo
+- [ ] add upscaling (to avoid blurred font rendering)
+- [ ] 
+
+### OSX
+- [ ] add support for multi display setups
+- [ ] get ```com.apple.desktop.admin.png``` thing to work
+
+### Linux
+- [ ] add ```def dosetbackground(path)```
+- [ ] add ```def getscreensize()```
+- [ ] add ```def getfontvars(height, explanation)```
+- [ ] add cron explanation
 
 ## Readme
 
@@ -29,7 +43,7 @@ Use native operating system package manager to install PIL/Pillow ([comp. the Pi
 
 ```$ zypper install python-Pillow``` (openSUSE)
 
-```$ yum install python-Pillow``` (Fedora)
+```$ dnf (or yum) install python-pillow``` (Fedora)
 
 ### Scheduling
 In order to schedule getspace to do it's thing automatically you've to:
@@ -40,9 +54,10 @@ In order to schedule getspace to do it's thing automatically you've to:
 - change the ```USERNAME``` within the "Program" string in ```local.getspace.plist```
 - add the changed ```local.getspace.plist``` into your ```~/Library/LaunchAgents```
 
-#### Linux
+#### Linux (notes)
 
 ```30 12 * * * /path/to/getspace.py``` (alyways 12.30h)
+
 ```@reboot /path/to/getspace.py``` (after Reboot, checken, if after hibernate)
 
 ([comp. CronHowto on Ubuntu](https://help.ubuntu.com/community/CronHowto))
@@ -53,17 +68,6 @@ if the above is not (yet) done, you can always run the script manually like so:
 
 ```$ python /path/to/getspace.py```
 
-## Todo
-- add upscaling (to avoid blurred font rendering)
-
-### OSX
-- add support for multi display setups
-
-### Linux
-- add ```def dosetbackground(path)```
-- add ```def getscreensize()```
-- add ```def getfontvars(height, explanation)```
-
 ## Authors
 [error:undefined design](http://error-undefined.de/)
 
@@ -71,4 +75,4 @@ if the above is not (yet) done, you can always run the script manually like so:
 
 [MIT](https://opensource.org/licenses/MIT)
 
-It is discouraged to use this plugin in any project that promotes racism, sexism, homophobia, animal abuse, violence or any other form of hate speech.
+It is discouraged to use this script in any project that promotes racism, sexism, homophobia, animal abuse, violence or any other form of hate speech.
