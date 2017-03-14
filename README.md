@@ -12,6 +12,7 @@ In order to get txt info on the image, you need to install Pillow (PIL Fork). If
 Most of the times:
 
 ```$ sudo easy_install pip```
+
 ```$ (sudo) pip install Pillow```
 
 #### Linux
@@ -19,7 +20,9 @@ Most of the times:
 Use native operating system package manager to install PIL/Pillow ([comp. the Pillow Docs](http://pillow.readthedocs.io/en/latest/installation.html#linux-installation)), for example:
 
 ```$ apt-get install python-pillow```
+
 ```$ zypper install python-Pillow``` (openSUSE)
+
 ```$ yum install python-Pillow``` (Fedora)
 
 ### Scheduling
