@@ -2,11 +2,10 @@
 Change your wallpaper to today's Astronomy Picture of the Day, everyday – along with a brief explanation.
 
 ## Todo
-- [ ] add upscaling (to avoid blurred font rendering)
-- [ ] 
+- [X] add upscaling (to avoid blurred font rendering)
+- [ ] add support for multi display setups
 
 ### OSX
-- [ ] add support for multi display setups
 - [ ] get ```com.apple.desktop.admin.png``` thing to work
 
 ### Linux
