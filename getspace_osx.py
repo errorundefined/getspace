@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 
 # OSX NOTIFICATION FUNCTION
 def notify(title, subtitle, text, kind):
@@ -16,11 +17,23 @@ def notify(title, subtitle, text, kind):
 
 # OSX SCREEN SIZE FUNCTION
 def getscreensize():
-	import AppKit
-	# wrong because in a multi screen setup, it would return the size of the last screen in the array
-	for screen in AppKit.NSScreen.screens(): 
-		vw = screen.frame().size.width
-		vh = screen.frame().size.height
+
+	# import AppKit
+	# # wrong because in a multi screen setup, it would return the size of the last screen in the array
+	# for screen in AppKit.NSScreen.screens(): 
+	# 	vw = screen.frame().size.width
+	# 	vh = screen.frame().size.height
+	# return (vw, vh)
+
+	# system_profiler SPDisplaysDataType | grep Resolution | grep -oE '[0-9]+' | grep -Eo '[0-9]+$'
+	systemprofile = subprocess.Popen(["system_profiler", "SPDisplaysDataType"], stdout=subprocess.PIPE)
+	stdout = systemprofile.communicate()
+	stdout = stdout[0].splitlines()
+	for line in stdout:
+		if "Resolution" in line:
+			res = [int(s) for s in line.split() if s.isdigit()]
+			vw = res[0]
+			vh = res[1]
 	return (vw, vh)
 
 # OSX FONT DEFINITION VARIABLES
