@@ -42,6 +42,7 @@ def getcolor(img):
 
 # OPEN URL ON SRV - ADD YOUR API KEY HERE
 response = urllib.urlopen('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
+print 'APOD info downloaded.'
 
 # LOAD JSON DATA
 json = json.load(response)
@@ -62,7 +63,8 @@ if media_type == 'image':
 	# (maybe there's not always a HQ version? if so, add fallback for 'url')
 
 	# DEFINE FILE PATH VARIABLES
-	imgname = os.path.basename(hdurl)
+	# imgname = os.path.basename(hdurl)
+	imgname = 'testimage.jpg' # debugging
 	filename, file_extension = os.path.splitext(imgname)
 	savein = path + '/' + imgname
 	saveout = path + '/' + filename + '_info' + file_extension
@@ -75,14 +77,16 @@ if media_type == 'image':
 			file = open(lastspace, 'w')
 			file.write(imgname) 
 			file.close()
+			print 'exiting (there\'s no new image available)'
 			quit()
 	else:
 		file = open(lastspace, 'w')
-		file.write(imgname) 
+		file.write(imgname)
 		file.close()
 
 	# DOWNLOAD THE HQ IMAGE FROM hdurl TO savein
 	urllib.urlretrieve(hdurl, savein)
+	print 'APOD image downloaded.'
 
 	# CHECK IF PIL/PILLOW IS INSTALLED
 	try:
@@ -96,7 +100,8 @@ if media_type == 'image':
 		(vw, vh) = getspace.getscreensize()
 
 		# CALCULATE RATIO OF THE SCREEN
-		ratioscreen = vw / vh
+		ratioscreen = float(vw) / vh
+		print("Screenratio is %s (%sx%spx)" % (ratioscreen, vw, vh))
 
 		# MANIPULATE THE IMAGE!
 		from PIL import Image
@@ -141,6 +146,7 @@ if media_type == 'image':
 
 		# CALCULATE RATIO OF THE IMAGE
 		ratioimage = float(width) / height
+		print("Imageratio is %s (%sx%spx)" % (ratioimage, width, height))
 
 		# CUT THE IMAGE TO THE SCREEN RATIO
 		if ratioscreen > ratioimage:
@@ -149,11 +155,25 @@ if media_type == 'image':
 			img = ImageOps.fit(img, (width,newheight), centering = (0.5,0.5))
 			(width, height) = img.size
 
+			print 'Image cut.'
+
 		elif ratioscreen < ratioimage:
 
 			newwidth = floor(height * ratioscreen)
+
 			img = ImageOps.fit(img, (newwidth,height), centering = (0.5,0.5))
 			(width, height) = img.size
+
+			print 'Image cut.'
+
+		# UPSCALE IMAGE TO DISPLAY SIZE
+		if width < vw:
+
+			img = img.resize((int(vw), int(vh)), Image.BICUBIC)
+			width = vw
+			height = vh
+
+			print 'Image upscaled.'
 		
 		# BEGIN PILLOW'S DRAWING
 		overlay = Image.new('RGBA', img.size)
@@ -195,8 +215,12 @@ if media_type == 'image':
 		# SET THE OVERLAY ON TOP OF THE IMG
 		img = Image.alpha_composite(img, overlay)
 
+		print 'Text written.'
+
 		# WRITE THE IMAGE TO saveout
 		img.save(saveout)
+
+		print 'Image saved.'
 
 		# SET savein TO saveout SO THE MODIFIED IMAGE IS SET AS BG IN THE NEXT STEP
 		savein = saveout
@@ -204,6 +228,8 @@ if media_type == 'image':
 
 	# SETTING THE DESKTOP BG
 	getspace.dosetbackground(savein)
+
+	print 'Background set.'
 
 	# SETTING 
 
