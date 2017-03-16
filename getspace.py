@@ -63,8 +63,8 @@ if media_type == 'image':
 	# (maybe there's not always a HQ version? if so, add fallback for 'url')
 
 	# DEFINE FILE PATH VARIABLES
-	# imgname = os.path.basename(hdurl)
-	imgname = 'testimage.jpg' # debugging
+	imgname = os.path.basename(hdurl)
+	# imgname = 'testimage2.jpg' # debugging
 	filename, file_extension = os.path.splitext(imgname)
 	savein = path + '/' + imgname
 	saveout = path + '/' + filename + '_info' + file_extension

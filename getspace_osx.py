@@ -93,38 +93,39 @@ def getfontvars(height, explanation):
 
 # OSX SET BACKGROUND
 def dosetbackground(path):
-	# ######
-	# APPLESCRIPT SOLUTION 1
-	# does not seem to change more than 1 desktop
-	# ######
-	# setbackgroundcmd = """
-	# osascript -e 'tell application "System Events" to set picture of every desktop to ("{}" as POSIX file as alias)'
-	# """
 
-	# ######
-	# APPLESCRIPT SOLUTION 2
-	# does not seem to change more than 1 desktop
-	# ######
-	# setbackgroundcmd = """
-	# osascript -e 'tell application "System Events"
-	# set desktopCount to count of desktops
-	# repeat with desktopNumber from 1 to desktopCount
-	# 	tell desktop desktopNumber
-	# 		set picture to "{}"
-	# 	end tell
-	# end repeat
-	# end tell'
-	# """.format(path)
+	# GET OSX VERSION NUMBER
+	import platform
+	version = platform.mac_ver()
 
-	# ######
-	# SQLITE SOLUTION
-	# seems to be working though it uses killall Dock and all desktops have to be created from the first
-	# ######
-	setbackgroundcmd = """
-	sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '{}'" && killall Dock
-	""".format(path)
+	# SET COMMAND DEPENDING ON OSX VERSION
+	if version[0] >= 10.9:
+		# AFTER MAVERICKS: SQLITE SOLUTION
+		# seems to be working though it uses killall Dock and all desktops have to be created from the first
+		# add an  WHERE ROWID='1' ??
+		setbackgroundcmd = """
+		sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "UPDATE data SET value='{}'" && killall Dock
+		""".format(path)
+
+	else:
+		# BEFORE MAVERICKS: APPLESCRIPT SOLUTION
+		setbackgroundcmd = """
+		osascript -e 'tell application "System Events"
+		set desktopCount to count of desktops
+		repeat with desktopNumber from 1 to desktopCount
+			tell desktop desktopNumber
+				set picture to "{}"
+			end tell
+		end repeat
+		end tell'
+		""".format(path)
+
+		# setbackgroundcmd = """
+		# osascript -e 'tell application "System Events" to set picture of every desktop to ("{}" as POSIX file as alias)'
+		# """.format(path)
 
 	os.popen(setbackgroundcmd)
+
 
 # ADD FUNCTION FOR CHANGING ADMIN LOGIN PNG
 # dosetbackground(savein)
