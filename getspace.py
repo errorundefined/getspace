@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+# import ssl
 import json
 import urllib
 
@@ -41,14 +42,38 @@ def getcolor(img):
 	return color
 
 # OPEN URL ON SRV - ADD YOUR API KEY HERE
-response = urllib.urlopen('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
-print 'APOD info downloaded.'
+url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'
 
-# LOAD JSON DATA
-json = json.load(response)
-media_type = (json['media_type'])
+try:
+    response = urllib.urlopen(url)
 
-# IF AN IMAGE IS AVAILABLE
+    # LOAD JSON DATA FROM OBJECT
+    jsonstuff = json.load(response)
+
+except IOError, e:
+
+	print 'Using CURL fallback.'
+
+	import subprocess
+
+	process = subprocess.Popen(['curl', url], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout, stderr = process.communicate()
+	response = stdout
+	
+	# LOAD JSON DATA FROM STRING
+	jsonstuff = json.loads(response)
+
+
+# CHECK IF JSON DATA EXISTS
+if 'jsonstuff' not in locals():
+	print 'Failed! APOD info could not be downloaded.'
+	quit()
+
+else:
+	print 'APOD info downloaded.'
+	media_type = (jsonstuff['media_type'])
+
+# CHECK IF AN IMAGE IS AVAILABLE
 if media_type == 'image':
 
 	# IF 'PICTURES/GETSPACE' DOES NOT EXISTS, CREATE IT
@@ -56,10 +81,10 @@ if media_type == 'image':
 		os.makedirs(path)
 
 	# EXTRACT VARIABLES FROM JSON DATA
-	date = (json['date'])
-	title = (json['title'])
-	explanation = (json['explanation'])
-	hdurl = (json['hdurl'])
+	date = (jsonstuff['date'])
+	title = (jsonstuff['title'])
+	explanation = (jsonstuff['explanation'])
+	hdurl = (jsonstuff['hdurl'])
 	# (maybe there's not always a HQ version? if so, add fallback for 'url')
 
 	# DEFINE FILE PATH VARIABLES
@@ -73,9 +98,11 @@ if media_type == 'image':
 	lastspace = path + '/lastspace.txt'
 	if os.path.exists(lastspace):
 		lastimage = open(lastspace, 'r')
+		print 'lastimg is: ' + lastimage.read()
+		print 'imgname is: ' + imgname
 		if lastimage.read() == imgname:
 			file = open(lastspace, 'w')
-			file.write(imgname) 
+			file.write(imgname)
 			file.close()
 			print 'exiting (there\'s no new image available)'
 			quit()
