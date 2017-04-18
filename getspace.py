@@ -73,8 +73,11 @@ else:
 	print 'APOD info downloaded.'
 	media_type = (jsonstuff['media_type'])
 
-# CHECK IF AN IMAGE IS AVAILABLE
-if media_type == 'image':
+# CHECK IF AN VIDEO OR IMNAGE IS AVAILABLE
+if media_type == 'video':
+	getspace.notify("Space traveling now..", "There is an APOD video today.", "Watch it at apod.nasa.gov!", "success")
+
+elif media_type == 'image':
 
 	# IF 'PICTURES/GETSPACE' DOES NOT EXISTS, CREATE IT
 	if not os.path.exists(path):
