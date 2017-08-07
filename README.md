@@ -49,9 +49,9 @@ In order to schedule getspace to do it's thing automatically you've to:
 
 #### OSX
 
-- put the ```getspace.py``` to ```/Users/USERNAME/.bin/getspace.py```
+- do ```$ cd /path/to/getspace.py /Users/USERNAME/.bin``` to put the script into you .bin folder
 - change the ```USERNAME``` within the "Program" string in ```local.getspace.plist```
-- add the changed ```local.getspace.plist``` into your ```~/Library/LaunchAgents```
+- do ```$ cd /path/to/local.getspace.plist ~/Library/LaunchAgents```to add the changed plist into you Library
 
 #### Linux (notes)
 
