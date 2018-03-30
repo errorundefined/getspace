@@ -15,25 +15,22 @@ from sys import platform
 # ..IF OSX/MACOS:
 if platform == 'darwin':
 	
-	import getspace_osx as getspace
-	from notify_osx import notify
+	from lib.osx import notify, getscreensize, getfontvars, setwallpaper
 
-	print 'getspace is running as getspace_osx'
+	print 'getspace is running on OSX/macOS'
 
 	path = home + '/Pictures/GetSpace'
 
 # ..IF LINUX:
 elif platform == 'linux' or platform == 'linux2':
 
-	print 'getspace does NOT YET support linux'
-	# import getspace_linux as getspace
-	# from notify_linux import notify
+	# from lib.linux import notify, getscreensize, getfontvars, setwallpaper
 
-	notify('Boldly go where only aliens have gone before', 'asdasd', 'Background image has been set.', 'error')
+	print 'getspace does not yet support linux'
 
-	quit() # exit until draft is no draft any longer
+	quit() # exit – until draft is no draft any longer
 	
-	path = home + '/GetSpace'
+	path = home + '/GetSpace' # ??
 
 else:
 
@@ -267,7 +264,7 @@ elif media_type == 'image':
 
 
 	# SETTING THE DESKTOP BG
-	getspace.dosetbackground(savein)
+	setwallpaper(savein)
 
 	print 'Background set.'
 

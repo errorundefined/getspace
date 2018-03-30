@@ -3,6 +3,17 @@
 import os
 import subprocess
 
+def notify(title, subtitle, text, kind):
+
+	if kind == 'success':
+		sound = 'Submarine'
+	else:
+		sound = 'Basso'
+
+	os.system("""
+		osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'
+		""".format(text, title, subtitle, sound))
+
 # OSX SCREEN SIZE FUNCTION
 def getscreensize():
 
@@ -79,11 +90,12 @@ def getfontvars(height, explanation):
 	return (fsizehead, fsizetext, wrapped, headfont, textfont)
 
 
-# OSX SET BACKGROUND
-def dosetbackground(path):
+# OSX SET WALLPAPER
+def setwallpaper(path):
 
 	# GET OSX VERSION NUMBER
 	import platform
+	
 	version = platform.mac_ver()
 
 	# SET COMMAND DEPENDING ON OSX VERSION
@@ -116,7 +128,7 @@ def dosetbackground(path):
 
 
 # ADD FUNCTION FOR CHANGING ADMIN LOGIN PNG
-# dosetbackground(savein)
+# setwallpaper(savein)
 	# loginimage = '/Library/Caches/com.apple.desktop.admin.png'
 	
 	# try:
