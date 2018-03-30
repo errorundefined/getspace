@@ -26,11 +26,11 @@ def getscreensize():
 	# return (vw, vh)
 
 	# system_profiler SPDisplaysDataType | grep Resolution | grep -oE '[0-9]+' | grep -Eo '[0-9]+$'
-	systemprofile = subprocess.Popen(["system_profiler", "SPDisplaysDataType"], stdout=subprocess.PIPE)
+	systemprofile = subprocess.Popen(['system_profiler', 'SPDisplaysDataType'], stdout=subprocess.PIPE)
 	stdout = systemprofile.communicate()
 	stdout = stdout[0].splitlines()
 	for line in stdout:
-		if "Resolution" in line:
+		if 'Resolution' in line:
 			res = [int(s) for s in line.split() if s.isdigit()]
 			vw = res[0]
 			vh = res[1]
@@ -49,8 +49,8 @@ def getfontvars(height, explanation):
 	fsizetext = int(floor(height / 65))
 	wrapped = textwrap.fill(explanation, 100)
 	# SET FONT VARS
-	headfont = ImageFont.truetype("/Library/Fonts/Futura.ttc",fsizehead,index=2)
-	textfont = ImageFont.truetype("/System/Library/Fonts/Avenir.ttc",fsizetext)
+	headfont = ImageFont.truetype('/Library/Fonts/Futura.ttc',fsizehead,index=2)
+	textfont = ImageFont.truetype('/System/Library/Fonts/Avenir.ttc',fsizetext)
 
 	# 'MENLO' STYLE
 	# SET SIZING VARS
@@ -58,8 +58,8 @@ def getfontvars(height, explanation):
 	# fsizetext = int(floor(height / 70))
 	# wrapped = textwrap.fill(explanation, 105)
 	# SET FONT VARS
-	# headfont = ImageFont.truetype("/System/Library/Fonts/Menlo.ttc",fsizehead,index=1)
-	# textfont = ImageFont.truetype("/System/Library/Fonts/Menlo.ttc",fsizetext)
+	# headfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizehead,index=1)
+	# textfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizetext)
 
 	# 'GILL SANS' STYLE
 	# SET SIZING VARS
@@ -67,8 +67,8 @@ def getfontvars(height, explanation):
 	# fsizetext = int(floor(height / 55))
 	# wrapped = textwrap.fill(explanation, 110)
 	# SET FONT VARS
-	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc",fsizehead,index=1)
-	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc",fsizetext,index=7)
+	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizehead,index=1)
+	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizetext,index=7)
 
 	# 'HELVETICA NEUE' STYLE
 	# SET SIZING VARS
@@ -76,8 +76,8 @@ def getfontvars(height, explanation):
 	# fsizetext = int(floor(height / 57))
 	# wrapped = textwrap.fill(explanation, 100)
 	# SET FONT VARS
-	# headfont = ImageFont.truetype("/System/Library/Fonts/HelveticaNeue.dfont",fsizehead,index=6)
-	# textfont = ImageFont.truetype("/System/Library/Fonts/HelveticaNeue.dfont",fsizetext,index=1)
+	# headfont = ImageFont.truetype('/System/Library/Fonts/HelveticaNeue.dfont',fsizehead,index=6)
+	# textfont = ImageFont.truetype('/System/Library/Fonts/HelveticaNeue.dfont',fsizetext,index=1)
 
 	# 'SAN FRANCISCO' STYLE
 	# SET SIZING VARS
@@ -85,8 +85,8 @@ def getfontvars(height, explanation):
 	# fsizetext = int(floor(height / 65))
 	# wrapped = textwrap.fill(explanation, 105)
 	# SET FONT VARS
-	# headfont = ImageFont.truetype("/System/Library/Fonts/SFCompactText-Heavy.otf",fsizehead)
-	# textfont = ImageFont.truetype("/System/Library/Fonts/SFCompactText-Light.otf",fsizetext)
+	# headfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Heavy.otf',fsizehead)
+	# textfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Light.otf',fsizetext)
 
 	return (fsizehead, fsizetext, wrapped, headfont, textfont)
 
