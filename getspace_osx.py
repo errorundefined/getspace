@@ -3,18 +3,6 @@
 import os
 import subprocess
 
-# OSX NOTIFICATION FUNCTION
-def notify(title, subtitle, text, kind):
-
-	if kind == 'success':
-		sound = 'Submarine'
-	else:
-		sound = 'Basso'
-
-	os.system("""
-		osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'
-		""".format(text, title, subtitle, sound))
-
 # OSX SCREEN SIZE FUNCTION
 def getscreensize():
 

@@ -35,60 +35,10 @@ def dosetbackground(path):
 	#         else:
 	#             print "An error ocurred while setting a new wallpaper."
 
-def notify(title, subtitle, text, kind):
-
-	# CHECK FOR COMMON NOTIFICATION SERVERS
-
-	notifysrv = False
-
-	# CHECK FOR NOTIFY-SEND
-	try:
-		subprocess.call(['notify-send'])
-	except OSError as e:
-		if e.errno == os.errno.ENOENT:
-			pass
-	else:
-		notifysrv = 'notify-send'
-
-	# CHECK FOR KDIALOG
-	if not notifysrv:
-		try:
-			subprocess.call(['kdialog'])
-		except OSError as e:
-			if e.errno == os.errno.ENOENT:
-				print 'No compatible notification server found.'
-		else:
-			notifysrv = 'kdialog'
-
-	# PREPARE VARS WITH DOUBLE TICKS
-	if notifysrv:
-		quotes = '"'
-		title = quotes + title + quotes
-		text = quotes + text + quotes
-
-	# SEND A NOTIFICATION TO THE notifysrv FOUND
-	# PREPARE FOR AND SENT TO notify-send
-	if notifysrv == 'notify-send':
-
-		if kind == 'error':
-			urgency = 'critical'
-		else:
-			urgency = 'normal'
-
-		# or subprocess.Popen?
-		subprocess.call(['notify-send', '-u', urgency, '-t', 500, title, text])
-
-	# OR PREPARE FOR AND SENT TO kdialog
-	elif notifysrv == 'kdialog':
-
-		# or subprocess.Popen?
-		subprocess.call(['kdialog', '--passivepopup', '--title', title, text, 5])
-
 def getscreensize():
 
 	# add stuff
 	# http://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment
-
 
 def getfontvars(height, explanation):
 
