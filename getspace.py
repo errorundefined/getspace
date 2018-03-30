@@ -11,21 +11,29 @@ home = os.getenv('HOME')
 # GET OS VARIABLE
 from sys import platform
 
-# CONDITIONALLY SET OS SPECIFIC ENV
-if platform == 'linux' or platform == 'linux2':
-
-	print 'getspace is NOT YET running as getspace_linux'
-	quit() # exit until draft is no draft any longer
-	
-	import getspace_linux as getspace
-	path = home + '/GetSpace'
-
-elif platform == 'darwin':
-
-	print 'getspace is running as getspace_osx'
+# CONDITIONALLY SET OS SPECIFIC ENV..
+# ..IF OSX/MACOS:
+if platform == 'darwin':
 	
 	import getspace_osx as getspace
+	from notify_osx import notify
+
+	print 'getspace is running as getspace_osx'
+
 	path = home + '/Pictures/GetSpace'
+
+# ..IF LINUX:
+elif platform == 'linux' or platform == 'linux2':
+
+	print 'getspace does NOT YET support linux'
+	# import getspace_linux as getspace
+	# from notify_linux import notify
+
+	notify('Boldly go where only aliens have gone before', 'asdasd', 'Background image has been set.', 'error')
+
+	quit() # exit until draft is no draft any longer
+	
+	path = home + '/GetSpace'
 
 else:
 
@@ -75,7 +83,7 @@ else:
 
 # CHECK IF AN VIDEO OR IMNAGE IS AVAILABLE
 if media_type == 'video':
-	getspace.notify("Space traveling now..", "There is an APOD video today.", "Watch it at apod.nasa.gov!", "success")
+	notify('Space traveling now..', 'There is an APOD video today.', 'Watch it at apod.nasa.gov!', 'success')
 
 elif media_type == 'image':
 
@@ -87,6 +95,8 @@ elif media_type == 'image':
 	date = (jsonstuff['date'])
 	title = (jsonstuff['title'])
 	explanation = (jsonstuff['explanation'])
+	explanation = explanation.replace('Explore the Universe: Random APOD Generator','')
+	explanation = explanation.replace('Follow APOD on: Facebook,  Google Plus,  Instagram, or Twitter','')
 	hdurl = (jsonstuff['hdurl'])
 	# (maybe there's not always a HQ version? if so, add fallback for 'url')
 
@@ -122,7 +132,7 @@ elif media_type == 'image':
 	try:
 		import PIL
 	except ImportError, e:
-		getspace.notify("Please read the source code.", "This thing requires a spaceship.", "So, no space info on the desktop for you.", "error")
+		notify('Please read the source code.', 'This thing requires a spaceship.', 'So, no space info on the desktop for you.', 'error')
 		pass
 	else:
 
@@ -131,7 +141,7 @@ elif media_type == 'image':
 
 		# CALCULATE RATIO OF THE SCREEN
 		ratioscreen = float(vw) / vh
-		print("Screenratio is %s (%sx%spx)" % (ratioscreen, vw, vh))
+		print('Screenratio is %s (%sx%spx)' % (ratioscreen, vw, vh))
 
 		# MANIPULATE THE IMAGE!
 		from PIL import Image
@@ -176,7 +186,7 @@ elif media_type == 'image':
 
 		# CALCULATE RATIO OF THE IMAGE
 		ratioimage = float(width) / height
-		print("Imageratio is %s (%sx%spx)" % (ratioimage, width, height))
+		print('Imageratio is %s (%sx%spx)' % (ratioimage, width, height))
 
 		# CUT THE IMAGE TO THE SCREEN RATIO
 		if ratioscreen > ratioimage:
@@ -232,7 +242,7 @@ elif media_type == 'image':
 		draw.rectangle([x - silver, y - silver, x2, y2 ],fill=imgcolor)
 
 		# DRAW THE 'EXPLANATION'-TEXT ONTO THE BACKGROUND
-		draw.text((x + 1, y + 1),wrapped,invcolor,font=textfont,align="left")
+		draw.text((x + 1, y + 1),wrapped,invcolor,font=textfont,align='left')
 		# draw.text((x, y),wrapped,(0,0,0),font=textfont,align="left")
 
 		# DRAW THE HEADING
@@ -263,8 +273,8 @@ elif media_type == 'image':
 
 	# SETTING 
 
-	getspace.notify("Boldly go where only aliens have gone before", title.replace("'", ""), "Background image has been set.", "success")
+	notify('Boldly go where only aliens have gone before', title.replace("'", ""), 'Background image has been set.', 'success')
 	
 else:
 
-	getspace.notify("Space, the final frontier!", "Apparently, there is no new image today.", "Try investing in space travel or something.", "error")
+	notify('Space, the final frontier!', 'Apparently, there is no new image today.', 'Try investing in space travel or something.', 'error')
