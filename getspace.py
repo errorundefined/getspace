@@ -9,11 +9,11 @@ import urllib
 home = os.getenv('HOME')
 
 # GET OS VARIABLE
-from sys import platform
+from sys import platform as os_type
 
 # CONDITIONALLY SET OS SPECIFIC ENV..
 # ..IF OSX/MACOS:
-if platform == 'darwin':
+if os_type == 'darwin':
 	
 	from lib.osx import notify, getscreensize, getfontvars, setwallpaper
 
@@ -22,16 +22,27 @@ if platform == 'darwin':
 	path = home + '/Pictures/GetSpace'
 
 # ..IF LINUX:
-elif platform == 'linux' or platform == 'linux2':
+elif os_type == 'linux' or os_type == 'linux2':
 
-	# from lib.linux import notify, getscreensize, getfontvars, setwallpaper
+	path = home + '/GetSpace' # ?? (maybe correct with home = os.path.expanduser('~') ??)
 
-	print 'getspace does not yet support linux'
+	from platform import linux_distribution
 
-	quit() # exit – until draft is no draft any longer
-	
-	path = home + '/GetSpace' # ??
+	distro = linux_distribution()[0]
 
+	if 'elementary' in distro:
+
+		from lib.linux import notify, getscreensize
+		from lib.linux_elementary import getfontvars, setwallpaper
+
+		print 'getspace is running as getspace_linux_elementary -- there may be bugs'
+
+	else:
+
+		# from lib.linux import notify, getscreensize, getfontvars, setwallpaper
+
+		print 'getspace does not yet fully support most linux versions'
+		quit() # exit - until draft is no draft any longer
 else:
 
 	print 'exiting (no compatible os found)'
@@ -50,10 +61,10 @@ def getcolor(img):
 url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'
 
 try:
-    response = urllib.urlopen(url)
+	response = urllib.urlopen(url)
 
-    # LOAD JSON DATA FROM OBJECT
-    jsonstuff = json.load(response)
+	# LOAD JSON DATA FROM OBJECT
+	jsonstuff = json.load(response)
 
 except IOError, e:
 
@@ -134,7 +145,7 @@ elif media_type == 'image':
 	else:
 
 		# GET THE SCREEN SIZE
-		(vw, vh) = getspace.getscreensize()
+		(vw, vh) = getscreensize()
 
 		# CALCULATE RATIO OF THE SCREEN
 		ratioscreen = float(vw) / vh
@@ -218,7 +229,7 @@ elif media_type == 'image':
 		draw = ImageDraw.Draw(overlay)
 
 		# GET FONT VARIABLES
-		(fsizehead, fsizetext, wrapped, headfont, textfont) = getspace.getfontvars(height, explanation)
+		(fsizehead, fsizetext, wrapped, headfont, textfont) = getfontvars(height, explanation)
 
 		# CALCULATE THE HEADING SIZE
 		whead, hhead = draw.textsize(title,font=headfont)
