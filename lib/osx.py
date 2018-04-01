@@ -75,15 +75,6 @@ def getfontvars(height, explanation):
 	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizehead,index=1)
 	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizetext,index=7)
 
-	# 'HELVETICA NEUE' STYLE
-	# SET SIZING VARS
-	# fsizehead = int(floor(height / 30))
-	# fsizetext = int(floor(height / 57))
-	# wrapped = textwrap.fill(explanation, 100)
-	# SET FONT VARS
-	# headfont = ImageFont.truetype('/System/Library/Fonts/HelveticaNeue.dfont',fsizehead,index=6)
-	# textfont = ImageFont.truetype('/System/Library/Fonts/HelveticaNeue.dfont',fsizetext,index=1)
-
 	# 'SAN FRANCISCO' STYLE
 	# SET SIZING VARS
 	# fsizehead = int(floor(height / 35))
