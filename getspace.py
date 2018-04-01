@@ -251,7 +251,7 @@ elif media_type == 'image':
 		draw.rectangle([x - silver, y - silver, x2, y2 ],fill=imgcolor)
 
 		# DRAW THE 'EXPLANATION'-TEXT ONTO THE BACKGROUND
-		draw.text((x + 1, y + 1),wrapped,invcolor,font=textfont,align='left')
+		draw.text((x + 1, y + 1),wrapped,invcolor,font=textfont)
 		# draw.text((x, y),wrapped,(0,0,0),font=textfont,align="left")
 
 		# DRAW THE HEADING
