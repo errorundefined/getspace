@@ -199,7 +199,8 @@ elif media_type == 'image':
 		# CUT THE IMAGE TO THE SCREEN RATIO
 		if ratioscreen > ratioimage:
 
-			newheight = floor(width / ratioscreen)
+			newheight = int(floor(width / ratioscreen))
+
 			img = ImageOps.fit(img, (width,newheight), centering = (0.5,0.5))
 			(width, height) = img.size
 
@@ -207,7 +208,7 @@ elif media_type == 'image':
 
 		elif ratioscreen < ratioimage:
 
-			newwidth = floor(height * ratioscreen)
+			newwidth = int(floor(height * ratioscreen))
 
 			img = ImageOps.fit(img, (newwidth,height), centering = (0.5,0.5))
 			(width, height) = img.size
