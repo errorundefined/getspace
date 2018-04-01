@@ -25,7 +25,7 @@ def getfontvars(height, explanation):
 # ~/.local/share/backgrounds/
 # 
 # PITFALL 1
-# Elementary OS does not overwrite an image there ones created –
+# Elementary OS does not overwrite an image there once created -
 # so for debugging purposes you may have to delete the picture
 # there (instead of in GetSpace's image storage folder)
 # 
