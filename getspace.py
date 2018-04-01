@@ -22,7 +22,7 @@ if os_type == 'darwin':
 	path = home + '/Pictures/GetSpace'
 
 # ..IF LINUX:
-elif os_type == 'linux' or os_type == 'linux2':
+elif os_type in ['linux', 'linux2']:
 
 	path = home + '/GetSpace' # ?? (maybe correct with home = os.path.expanduser('~') ??)
 
