@@ -68,7 +68,7 @@ def getscreensize():
 # def getfontvars(height, explanation):
 # 	(missing)
 
-def setwallpaper(path):
+# def setwallpaper(path):
 
 # 	(missing)
 	
