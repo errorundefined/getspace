@@ -91,7 +91,25 @@ else:
 
 # CHECK IF AN VIDEO OR IMNAGE IS AVAILABLE
 if media_type == 'video':
-	notify('Space traveling now..', 'There is an APOD video today.', 'Watch it at apod.nasa.gov!', 'success')
+
+	videourl = (jsonstuff['url'])
+
+	from lib.crossplatform import getuserconsent, setclipboard
+
+	if getuserconsent('There is an APOD video today - do you want to see it now?', 'Getspace has the ultimate question to the universe!'):
+
+		import webbrowser
+
+		webbrowser.open_new_tab(videourl)
+
+		notify('Space traveling now..', 'There is an APOD video today.', 'Getspace opened the video link in your browser.', 'success')
+		print 'APOD video opened in browser.'
+
+	else:
+
+		setclipboard(videourl)
+		notify('Space traveling now..', 'There is an APOD video today.', 'Getspace copied the video link to the clipboard.', 'success')
+		print 'APOD video link in clipboard.'
 
 elif media_type == 'image':
 
