@@ -1,9 +1,21 @@
 #!/usr/bin/env python
 
+# brought to you by error:undefined design
+# 
+# w: https://error-undefined.de
+# g: https://github.com/errorundefined
+# b: https://behance.net/errorundefined
+# 
+# This is part of the APOD client getspace.
+# Get the latest version here on Github:
+# https://github.com/errorundefined/getspace
+
 import os
 # import ssl
 import json
 import urllib
+
+from lib.pynotify.pynotify import notify
 
 # ENV VARIABLE
 home = os.getenv('HOME')
@@ -15,31 +27,49 @@ from sys import platform as os_type
 # ..IF OSX/MACOS:
 if os_type == 'darwin':
 	
-	from lib.osx import notify, getscreensize, getfontvars, setwallpaper
+	# ..IMPORT MODULES
+	from lib.getspace_osx import getscreensize, setwallpaper
 
-	print 'getspace is running on OSX/macOS'
-
+	# ..SET ENV
 	path = home + '/Pictures/GetSpace'
+
+	# ..SET STYLE
+	headstyle = ('/Library/Fonts/Futura.ttc', 2, 36)
+	textstyle = ('/System/Library/Fonts/Avenir.ttc', 0, 65)
+	explanation_wraplength = 100
+
+	# ..AND STDOUT.
+	print 'getspace is running on OSX/macOS'
 
 # ..IF LINUX:
 elif os_type in ['linux', 'linux2']:
 
-	path = home + '/GetSpace' # ?? (maybe correct with home = os.path.expanduser('~') ??)
-
+	# ..IMPORT MODULES
 	from platform import linux_distribution
-
 	distro = linux_distribution()[0]
 
+	# ..SET ENV
+	path = home + '/GetSpace' # ?? (maybe correct with home = os.path.expanduser('~') ??)
+
+	# ..AND GO INTO DETAILS:
+	# ..IF ELEMENTARY OS
 	if 'elementary' in distro:
 
-		from lib.linux import notify, getscreensize
-		from lib.linux_elementary import getfontvars, setwallpaper
+		# ..IMPORT MODULES
+		from lib.getspace_linux import getscreensize
+		from lib.getspace_linux_elementary import setwallpaper
 
+		# ..SET STYLE
+		headstyle = ('/usr/share/fonts/truetype/open-sans-elementary/OpenSans-ExtraBold.ttf', 0, 45)
+		textstyle = ('/usr/share/fonts/truetype/open-sans-elementary/OpenSans-Light.ttf', 0, 55)
+		explanation_wraplength = 100
+
+		# ..AND STDOUT.
 		print 'getspace is running as getspace_linux_elementary -- there may be bugs'
 
 	else:
 
-		# from lib.linux import notify, getscreensize, getfontvars, setwallpaper
+		# from lib.getspace_linux import notify, getscreensize, getfontvars, setwallpaper
 
 		print 'getspace does not yet fully support most linux versions'
 		quit() # exit - until draft is no draft any longer
@@ -50,15 +80,17 @@ else:
 
 # DEF GET COLOR BASED ON https://gist.github.com/zollinger/1722663
 def getcolor(img):
+	
 	img = img.resize((150, 150))
 	result = img.convert('P', palette=Image.ADAPTIVE, colors=1)
 	result.putalpha(255)
 	colors = result.getcolors(22500)
 	color = colors[0][1]
+	
 	return color
 
 # OPEN URL ON SRV - ADD YOUR API KEY HERE
-url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'
+url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # (for video testing: '&date=2018-03-18')
 
 try:
 	response = urllib.urlopen(url)
@@ -94,7 +126,8 @@ if media_type == 'video':
 
 	videourl = (jsonstuff['url'])
 
-	from lib.crossplatform import getuserconsent, setclipboard
+	from lib.pyquestion.pyquestion import getuserconsent
+	from lib.pytoclipboard.pytoclipboard import setclipboard
 
 	if getuserconsent('There is an APOD video today - do you want to see it now?', 'Getspace has the ultimate question to the universe!'):
 
@@ -247,8 +280,21 @@ elif media_type == 'image':
 		# draw = ImageDraw.Draw(img)
 		draw = ImageDraw.Draw(overlay)
 
-		# GET FONT VARIABLES
-		(fsizehead, fsizetext, wrapped, headfont, textfont) = getfontvars(height, explanation)
+		# IMPORT MORE STUFF
+		from PIL import ImageFont
+		from math import floor
+		import textwrap
+
+		# CALCULATE FONT SIZES
+		fsizehead = int(floor(height / headstyle[2]))
+		fsizetext = int(floor(height / textstyle[2]))
+		
+		# WRAP TEXT
+		wrapped = textwrap.fill(explanation, explanation_wraplength)
+		
+		# SET FONT STYLES
+		headfont = ImageFont.truetype(headstyle[0],fsizehead,index=headstyle[1])
+		textfont = ImageFont.truetype(textstyle[0],fsizetext,index=textstyle[1])
 
 		# CALCULATE THE HEADING SIZE
 		whead, hhead = draw.textsize(title,font=headfont)

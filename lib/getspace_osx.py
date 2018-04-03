@@ -1,24 +1,17 @@
 #!/usr/bin/env python
 
+# brought to you by error:undefined design
+# 
+# w: https://error-undefined.de
+# g: https://github.com/errorundefined
+# b: https://behance.net/errorundefined
+# 
+# This is part of the APOD client getspace.
+# Get the latest version here on Github:
+# https://github.com/errorundefined/getspace
+
 import os
 import subprocess
-
-def notify(title, subtitle, text, kind):
-
-	# IF YOU DO NOT LIKE SOUNDS WITH YOUR NOTIFICATIONS (DEFAULT)
-	os.system("""
-		osascript -e 'display notification "{}" with title "{}" subtitle "{}"'
-		""".format(text, title, subtitle))
-
-	# IF YOU LIKE SOUNDS WITH YOUR NOTIFICATIONS
-	# if kind == 'success':
-	# 	sound = 'Submarine'
-	# else:
-	# 	sound = 'Basso'
-
-	# os.system("""
-	# 	osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'
-	# 	""".format(text, title, subtitle, sound))
 
 # OSX SCREEN SIZE FUNCTION
 def getscreensize():
@@ -42,49 +35,49 @@ def getscreensize():
 	return (vw, vh)
 
 # OSX FONT DEFINITION VARIABLES
-def getfontvars(height, explanation):
+# def getfontvars(height, explanation):
 	
-	from PIL import ImageFont
-	from math import floor
-	import textwrap
+# 	from PIL import ImageFont
+# 	from math import floor
+# 	import textwrap
 
-	# 'FUTURA+AVENIR' STYLE
-	# SET SIZING VARS
-	fsizehead = int(floor(height / 36))
-	fsizetext = int(floor(height / 65))
-	wrapped = textwrap.fill(explanation, 100)
-	# SET FONT VARS
-	headfont = ImageFont.truetype('/Library/Fonts/Futura.ttc',fsizehead,index=2)
-	textfont = ImageFont.truetype('/System/Library/Fonts/Avenir.ttc',fsizetext)
+# 	# 'FUTURA+AVENIR' STYLE
+# 	# SET SIZING VARS
+# 	fsizehead = int(floor(height / 36))
+# 	fsizetext = int(floor(height / 65))
+# 	wrapped = textwrap.fill(explanation, 100)
+# 	# SET FONT VARS
+# 	headfont = ImageFont.truetype('/Library/Fonts/Futura.ttc',fsizehead,index=2)
+# 	textfont = ImageFont.truetype('/System/Library/Fonts/Avenir.ttc',fsizetext)
 
-	# 'MENLO' STYLE
-	# SET SIZING VARS
-	# fsizehead = int(floor(height / 30))
-	# fsizetext = int(floor(height / 70))
-	# wrapped = textwrap.fill(explanation, 105)
-	# SET FONT VARS
-	# headfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizehead,index=1)
-	# textfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizetext)
+# 	# 'MENLO' STYLE
+# 	# SET SIZING VARS
+# 	# fsizehead = int(floor(height / 30))
+# 	# fsizetext = int(floor(height / 70))
+# 	# wrapped = textwrap.fill(explanation, 105)
+# 	# SET FONT VARS
+# 	# headfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizehead,index=1)
+# 	# textfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizetext)
 
-	# 'GILL SANS' STYLE
-	# SET SIZING VARS
-	# fsizehead = int(floor(height / 35))
-	# fsizetext = int(floor(height / 55))
-	# wrapped = textwrap.fill(explanation, 110)
-	# SET FONT VARS
-	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizehead,index=1)
-	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizetext,index=7)
+# 	# 'GILL SANS' STYLE
+# 	# SET SIZING VARS
+# 	# fsizehead = int(floor(height / 35))
+# 	# fsizetext = int(floor(height / 55))
+# 	# wrapped = textwrap.fill(explanation, 110)
+# 	# SET FONT VARS
+# 	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizehead,index=1)
+# 	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizetext,index=7)
 
-	# 'SAN FRANCISCO' STYLE
-	# SET SIZING VARS
-	# fsizehead = int(floor(height / 35))
-	# fsizetext = int(floor(height / 65))
-	# wrapped = textwrap.fill(explanation, 105)
-	# SET FONT VARS
-	# headfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Heavy.otf',fsizehead)
-	# textfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Light.otf',fsizetext)
+# 	# 'SAN FRANCISCO' STYLE
+# 	# SET SIZING VARS
+# 	# fsizehead = int(floor(height / 35))
+# 	# fsizetext = int(floor(height / 65))
+# 	# wrapped = textwrap.fill(explanation, 105)
+# 	# SET FONT VARS
+# 	# headfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Heavy.otf',fsizehead)
+# 	# textfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Light.otf',fsizetext)
 
-	return (fsizehead, fsizetext, wrapped, headfont, textfont)
+# 	return (fsizehead, fsizetext, wrapped, headfont, textfont)
 
 
 # OSX SET WALLPAPER
