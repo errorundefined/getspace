@@ -10,6 +10,8 @@
 # Get the latest version here on Github:
 # https://github.com/errorundefined/getspace
 
+# https://stackoverflow.com/questions/1635027/whats-the-simplest-cross-platform-way-to-pop-up-graphical-dialogs-in-python
+
 def getuserconsent(message, title):
 
 	from sys import platform as os_type

@@ -28,3 +28,5 @@ import subprocess
 def setwallpaper(path):
 
 	subprocess.call(['set-wallpaper', path])
+
+	print 'Background set.'

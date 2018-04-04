@@ -34,52 +34,6 @@ def getscreensize():
 			vh = res[1]
 	return (vw, vh)
 
-# OSX FONT DEFINITION VARIABLES
-# def getfontvars(height, explanation):
-	
-# 	from PIL import ImageFont
-# 	from math import floor
-# 	import textwrap
-
-# 	# 'FUTURA+AVENIR' STYLE
-# 	# SET SIZING VARS
-# 	fsizehead = int(floor(height / 36))
-# 	fsizetext = int(floor(height / 65))
-# 	wrapped = textwrap.fill(explanation, 100)
-# 	# SET FONT VARS
-# 	headfont = ImageFont.truetype('/Library/Fonts/Futura.ttc',fsizehead,index=2)
-# 	textfont = ImageFont.truetype('/System/Library/Fonts/Avenir.ttc',fsizetext)
-
-# 	# 'MENLO' STYLE
-# 	# SET SIZING VARS
-# 	# fsizehead = int(floor(height / 30))
-# 	# fsizetext = int(floor(height / 70))
-# 	# wrapped = textwrap.fill(explanation, 105)
-# 	# SET FONT VARS
-# 	# headfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizehead,index=1)
-# 	# textfont = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc',fsizetext)
-
-# 	# 'GILL SANS' STYLE
-# 	# SET SIZING VARS
-# 	# fsizehead = int(floor(height / 35))
-# 	# fsizetext = int(floor(height / 55))
-# 	# wrapped = textwrap.fill(explanation, 110)
-# 	# SET FONT VARS
-# 	# headfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizehead,index=1)
-# 	# textfont = ImageFont.truetype("/Library/Fonts/GillSans.ttc',fsizetext,index=7)
-
-# 	# 'SAN FRANCISCO' STYLE
-# 	# SET SIZING VARS
-# 	# fsizehead = int(floor(height / 35))
-# 	# fsizetext = int(floor(height / 65))
-# 	# wrapped = textwrap.fill(explanation, 105)
-# 	# SET FONT VARS
-# 	# headfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Heavy.otf',fsizehead)
-# 	# textfont = ImageFont.truetype('/System/Library/Fonts/SFCompactText-Light.otf',fsizetext)
-
-# 	return (fsizehead, fsizetext, wrapped, headfont, textfont)
-
-
 # OSX SET WALLPAPER
 def setwallpaper(path):
 
@@ -115,6 +69,8 @@ def setwallpaper(path):
 		# """.format(path)
 
 	os.popen(setbackgroundcmd)
+
+	print 'Background set.'
 
 
 # ADD FUNCTION FOR CHANGING ADMIN LOGIN PNG
