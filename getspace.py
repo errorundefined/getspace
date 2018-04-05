@@ -11,19 +11,29 @@
 # https://github.com/errorundefined/getspace
 
 import os
+import datetime
 
 from lib.lib_getter import getjson, getenvironment
 from lib.pynotify.pynotify import notify
 
+##################################
+# PREPARATIONS
+##################################
 # SET IDENTY AND SOURCE FOR SCRIPT
 scriptname = 'getspace'
 saveinfolder = 'GetSpace'
-url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # (for video testing: '&date=2018-03-18')
+
+# SET SITUATION IN SPACETIME
+d = datetime.date.today()
+year = d.strftime('%Y')
+month = d.strftime('%m')
 
 # GET ENVIRONMENT VARIABLE
 (osenvironment, path, style) = getenvironment(scriptname, saveinfolder)
 
-# IMPORT PLATFORM DEPENDENT MODULES
+##################################
+# PLATFORM DEPENDENT MODULES
+##################################
 if not osenvironment:
 	print 'exiting (no compatible os found)'
 	quit()
@@ -35,13 +45,23 @@ elif osenvironment == 'elementary':
 	from lib.os_linux import getscreensize
 	from lib.os_linux_elementary import setwallpaper
 
+##################################
+# SET AND GET JSON
+##################################
+# SET MAIN JSON FEED
+url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # (for video testing: '&date=2018-03-18')
+
 # GET JSON DATA
 json = getjson(url)
 
-# START SPECIFIC LOGIC
+##################################
+# START LOGIC SPECIFIC TO GETSPACE
+##################################
 media_type = (json['media_type'])
 
+##################################
 # IF VIDEO IS AVAILABLE
+##################################
 if media_type == 'video':
 
 	videourl = (json['url'])
@@ -77,7 +97,9 @@ if media_type == 'video':
 		
 		print 'APOD video link in clipboard.'
 
+##################################
 # IF IMAGE IS AVAILABLE
+##################################
 elif media_type == 'image':
 
 	from lib.lib_image import setpaths, getimage, setimage
@@ -103,8 +125,7 @@ elif media_type == 'image':
 	if not os.path.exists(path):
 		os.makedirs(path)
 
-	# CONSTRUCT PATHS VARS -- YOU MAY CHANGE
-	# False TO A CUSTOM FILE NAME (E.G. date)
+	# CONSTRUCT PATHS VARS
 	(savein, saveout) = setpaths(path, imageurl, False)
 
 	# DOWNLOAD IMAGE TO FS
@@ -117,15 +138,17 @@ elif media_type == 'image':
 	# SET IMAGE AS WALLPAPER
 	setwallpaper(wallpaper)
 
+	# NOTIFICATION ABOUT DESKTOP CHANGE
 	notify(
-		'Boldly go where only aliens have gone before',
 		title.replace("'", ""),
+		'Boldly go where only aliens have gone before',
 		'Background image has been set.',
 		'success'
 		)
 
 else:
-
+	
+	# NOTIFICATION ABOUT FAILURE
 	notify(
 		'Space, the final frontier!',
 		'Apparently, there is no new image today.',
