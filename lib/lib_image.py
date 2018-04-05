@@ -23,8 +23,11 @@ def setpaths(path, imageurl, usecustomname):
 	imgname = os.path.basename(imageurl)
 	filename, file_extension = os.path.splitext(imgname)
 
+	if not file_extension:
+		file_extension = '.jpg'
+
 	if usecustomname:
-		imgname = usecustomname + file_extension
+		imgname = str(usecustomname) + file_extension
 	
 	savein = path + '/' + imgname
 	saveout = path + '/' + filename + '_info' + file_extension
