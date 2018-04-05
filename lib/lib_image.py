@@ -35,7 +35,7 @@ def setpaths(path, imageurl, usecustomname):
 	return savein, saveout
 
 # SET THE TEXT ON THE IMAGE
-def setimage(savein, saveout, screensize, content, style, pilerror):
+def setimage(savein, saveout, screensize, content, style):
 
 	from pynotify.pynotify import notify
 
@@ -46,7 +46,12 @@ def setimage(savein, saveout, screensize, content, style, pilerror):
 	try:
 		import PIL
 	except ImportError, e:
-		notify(pilerror)
+		notify(
+			'Please read the source code.',
+			'This thing requires an additional package.',
+			'You need Pillow (Python package) to get an image with info.',
+			'error'
+			)
 		pass
 	else:
 

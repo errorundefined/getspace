@@ -20,14 +20,6 @@ scriptname = 'getspace'
 saveinfolder = 'GetSpace'
 url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # (for video testing: '&date=2018-03-18')
 
-# SET NOTIFIACTION FOR PILLOW IMPORT ERROR
-pilerror = (
-	'Please read the source code.',
-	'This thing requires a spaceship.',
-	'You need Pillow to get an image with space info.',
-	'error'
-	)
-
 # GET ENVIRONMENT VARIABLE
 (osenvironment, path, style) = getenvironment(scriptname, saveinfolder)
 
@@ -76,7 +68,8 @@ if media_type == 'video':
 
 		setclipboard(videourl)
 		
-		notify('Space traveling now..',
+		notify(
+			'Space traveling now..',
 			'There is an APOD video today.',
 			'Getspace copied the video link to the clipboard.',
 			'success'
@@ -119,7 +112,7 @@ elif media_type == 'image':
 
 	# MAKE AND SAVE IMAGE, IF POSSIBLE
 	# RETURNS PATH TO NEW WALLPAPER
-	wallpaper = setimage(savein, saveout, getscreensize(), content, style, pilerror)
+	wallpaper = setimage(savein, saveout, getscreensize(), content, style)
 
 	# SET IMAGE AS WALLPAPER
 	setwallpaper(wallpaper)
