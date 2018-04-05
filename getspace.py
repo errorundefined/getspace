@@ -49,7 +49,7 @@ elif osenvironment == 'elementary':
 # SET AND GET JSON
 ##################################
 # SET MAIN JSON FEED
-url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2018-03-18'
+url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # &date=2018-03-18' # for testing
 
 # GET JSON DATA
 json = getjson(url)
