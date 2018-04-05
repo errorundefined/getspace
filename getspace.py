@@ -49,7 +49,7 @@ elif osenvironment == 'elementary':
 # SET AND GET JSON
 ##################################
 # SET MAIN JSON FEED
-url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # (for video testing: '&date=2018-03-18')
+url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2018-03-18'
 
 # GET JSON DATA
 json = getjson(url)
@@ -64,38 +64,27 @@ media_type = (json['media_type'])
 ##################################
 if media_type == 'video':
 
-	videourl = (json['url'])
+	from lib.lib_link import openurl
 
-	from lib.pyquestion.pyquestion import getuserconsent
-	from lib.pytoclipboard.pytoclipboard import setclipboard
-
-	if getuserconsent('There is an APOD video today - do you want to see it now?', 'Getspace has the ultimate question to the universe!'):
-
-		import webbrowser
-
-		webbrowser.open_new_tab(videourl)
-
-		notify(
+	openurl(
+		url = (json['url']),
+		question=(
+			'There is an APOD video today - do you want to see it now?',
+			'Getspace has the ultimate question to the universe!'
+			),
+		notify_opened=(
 			'Space traveling now..',
 			'There is an APOD video today.',
 			'Getspace opened the video link in your browser.',
 			'success'
-			)
-		
-		print 'APOD video opened in browser.'
-
-	else:
-
-		setclipboard(videourl)
-		
-		notify(
+			),
+		notify_copied=(
 			'Space traveling now..',
 			'There is an APOD video today.',
 			'Getspace copied the video link to the clipboard.',
 			'success'
 			)
-		
-		print 'APOD video link in clipboard.'
+		)
 
 ##################################
 # IF IMAGE IS AVAILABLE
