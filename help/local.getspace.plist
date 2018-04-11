@@ -5,15 +5,20 @@
 	<key>Label</key>
 	<string>local.getspace</string>
 	<key>Program</key>
-	<string>/Users/USERNAME/.bin/getspace.py</string>
+	<string>/Users/timonhenze/.bin/getspace/getspace.py</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
 	<string>/tmp/local.getspace.stderr</string>
 	<key>StandardOutPath</key>
 	<string>/tmp/local.getspace.stdout</string>
-	<key>StartInterval</key>
-	<integer>3600</integer>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>8</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
 	<key>NetworkState</key>
 	<true/>
 	<key>SuccessfulExit</key>
