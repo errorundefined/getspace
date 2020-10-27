@@ -48,7 +48,8 @@ def setwallpaper(path):
 		# seems to be working though it uses killall Dock and all desktops have to be created from the first
 		# add an  WHERE ROWID='1' ??
 		setbackgroundcmd = """
-		sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "UPDATE data SET value='{}'" && killall Dock
+		sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "UPDATE data SET value='{}'"
+		killall Dock
 		""".format(path)
 
 	else:
