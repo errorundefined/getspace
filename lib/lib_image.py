@@ -191,7 +191,7 @@ def setimage(savein, saveout, screensize, content, style):
 		print 'Text written.'
 
 		# WRITE THE IMAGE TO saveout
-		img.save(saveout)
+		img.convert('RGB').save(saveout)
 
 		print 'Image saved.'
 
