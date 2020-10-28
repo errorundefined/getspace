@@ -74,7 +74,7 @@ def setimage(savein, saveout, screensize, content, style):
 
 		# OPEN IMG + INVERSION IMAGE
 		img = Image.open(savein)
-		inv = ImageOps.invert(img)
+		inv = ImageOps.invert(img.convert('RGB'))
 
 		# GET IMG + INVERSION COLOR
 		imgcolor = getcolor(img)
