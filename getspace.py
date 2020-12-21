@@ -55,6 +55,29 @@ url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY' # &date=2018-03-18'
 json = getjson(url)
 
 ##################################
+# CHECK IF MEDIA EXISTS
+##################################
+
+has_media = 'media_type' in json
+
+if not has_media:
+	has_msg = 'msg' in json
+
+	print('Switching to yesterday.')
+
+	if has_msg:
+		msg = (json['msg'])
+		split = msg.split('No data available for date: ', 1)
+		date = split[1]
+		date_time_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+		date_time_obj_yesterday = date_time_obj - datetime.timedelta(days=1)
+
+		yesterday = date_time_obj_yesterday.strftime('%Y-%m-%d')
+
+		url = base + '&date=' + yesterday
+		json = getjson(url)
+
+##################################
 # START LOGIC SPECIFIC TO GETSPACE
 ##################################
 media_type = (json['media_type'])
