@@ -12,6 +12,7 @@
 
 import os
 import datetime
+import argparse
 
 from lib.lib_getter import getjson, getenvironment
 from lib.pynotify.pynotify import notify
@@ -30,6 +31,16 @@ month = d.strftime('%m')
 
 # GET ENVIRONMENT VARIABLE
 (osenvironment, path, style) = getenvironment(scriptname, saveinfolder)
+
+##################################
+# PARSE ARGUMENTS
+##################################
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-n', '--notifications', help='deliver system notifications', action='store_true')
+args = parser.parse_args()
+if args.notifications:
+	print 'notifications turned on'
 
 ##################################
 # PLATFORM DEPENDENT MODULES
@@ -202,19 +213,21 @@ elif media_type == 'image':
 	setwallpaper(wallpaper)
 
 	# NOTIFICATION ABOUT DESKTOP CHANGE
-	notify(
-		title.replace("'", ""),
-		'Boldly go where only aliens have gone before',
-		'Background image has been set.',
-		'success'
-		)
+	if args.notifications:
+		notify(
+			title.replace("'", ""),
+			'Boldly go where only aliens have gone before',
+			'Background image has been set.',
+			'success'
+			)
 
 else:
 	
 	# NOTIFICATION ABOUT FAILURE
-	notify(
-		'Space, the final frontier!',
-		'Apparently, there is no new image today.',
-		'Try investing in space travel or something.',
-		'error'
-		)
+	if args.notifications:
+		notify(
+			'Space, the final frontier!',
+			'Apparently, there is no new image today.',
+			'Try investing in space travel or something.',
+			'error'
+			)
