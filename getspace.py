@@ -93,133 +93,160 @@ if not has_media:
 ##################################
 media_type = (json['media_type'])
 
-##################################
-# IF VIDEO IS AVAILABLE
-##################################
-if media_type == 'video':
+if media_type == 'video' or media_type == 'image':
+	video_to_image = False
 
-	from lib.lib_link import openurl
+	##################################
+	# IF VIDEO IS AVAILABLE
+	##################################
+	if media_type == 'video':
 
-	openurl(
-		url = (json['url']),
-		question=(
-			'There is an APOD video today - do you want to see it now?',
-			'Getspace has the ultimate question to the universe!'
-			),
-		notify_opened=(
-			'Space traveling now..',
-			'There is an APOD video today.',
-			'Getspace opened the video link in your browser.',
-			'success'
-			),
-		notify_copied=(
-			'Space traveling now..',
-			'There is an APOD video today.',
-			'Getspace copied the video link to the clipboard.',
-			'success'
-			)
-		)
+		# from lib.lib_link import openurl
 
-##################################
-# IF IMAGE IS AVAILABLE
-##################################
-elif media_type == 'image':
+		# quit() # !!!!!!
 
-	from lib.lib_image import setpaths, getimage, setimage
+		# openurl(
+		# 	url = (json['url']),
+		# 	question=(
+		# 		'There is an APOD video today - do you want to see it now?',
+		# 		'Getspace has the ultimate question to the universe!'
+		# 		),
+		# 	notify_opened=(
+		# 		'Space traveling now..',
+		# 		'There is an APOD video today.',
+		# 		'Getspace opened the video link in your browser.',
+		# 		'success'
+		# 		),
+		# 	notify_copied=(
+		# 		'Space traveling now..',
+		# 		'There is an APOD video today.',
+		# 		'Getspace copied the video link to the clipboard.',
+		# 		'success'
+		# 		)
+		# 	)
 
-	# GET DATE
-	date = (json['date'])
+		from urlparse import urlparse, parse_qs
 
-	# GET IMAGE URL
-	imageurl = (json['hdurl'])
+		url = (json['url'])
 
-	# GET AND CLEAN UP TEXT
-	text = (json['explanation'])
-	# text = (json['explanation']).encode('utf-8')
-	text = text.replace('  ',' ')
-	text = text.replace('--','-')
-	# text = text.replace(' - ',' -- ').decode('utf-8')
-	# text = text.replace('--',u'\u2E3A')
+		if url.startswith(('youtu', 'www')):
+			url = 'https://' + url
 
-	text = text.replace('Explore the Universe: Random APOD Generator','')
-	text = text.replace('Almost Hyperspace: Random APOD Generator','')
-	text = text.replace('Portal Universe: Random APOD Generator','')
+		query = urlparse(url)
 
-	split = text.split('Follow APOD on: ', 1)
-	text = split[0]
+		if 'youtube' in query.hostname:
+			if query.path == '/watch':
+				youtubeid = parse_qs(query.query)['v'][0]
+			elif query.path.startswith(('/embed/', '/v/')):
+				youtubeid = query.path.split('/')[2]
+		elif 'youtu.be' in query.hostname:
+			youtubeid = query.path[1:]
 
-	split = text.split('Follow APOD in English on: ', 1)
-	text = split[0]
+		if youtubeid:
+			imageurl = 'https://img.youtube.com/vi/' + youtubeid + '/maxresdefault.jpg'
+			video_to_image = True
 
-	split = text.split('Get the latest from NASA: ', 1)
-	text = split[0]
+	##################################
+	# IF IMAGE IS AVAILABLE
+	##################################
+	if media_type == 'image' or video_to_image:
 
-	split = text.split(' Gallery: Notable images', 1)
-	text = split[0]
-	
-	split = text.split(' Notable Images ', 1)
-	text = split[0]
+		from lib.lib_image import setpaths, getimage, setimage
 
-	split = text.split(' Notable images ', 1)
-	text = split[0]
+		# GET DATE
+		date = (json['date'])
 
-	split = text.split(' Today watch: ', 1)
-	text = split[0]
+		# GET IMAGE URL
+		if not video_to_image:
+			imageurl = (json['hdurl'])
 
-	split = text.split(' Watch: ', 1)
-	text = split[0]
+		# GET AND CLEAN UP TEXT
+		text = (json['explanation'])
+		# text = (json['explanation']).encode('utf-8')
+		text = text.replace('  ',' ')
+		text = text.replace('--','-')
+		# text = text.replace(' - ',' -- ').decode('utf-8')
+		# text = text.replace('--',u'\u2E3A')
 
-	split = text.split('Notable APOD Submissions:', 1)
-	text = split[0]
+		text = text.replace('Explore the Universe: Random APOD Generator','')
+		text = text.replace('Almost Hyperspace: Random APOD Generator','')
+		text = text.replace('Portal Universe: Random APOD Generator','')
 
-	split = text.split('Moon Occults Mars:', 1)
-	text = split[0]
+		split = text.split('Follow APOD on: ', 1)
+		text = split[0]
 
-	split = text.split('Comet NEOWISE Images: ', 1)
-	text = split[0]
+		split = text.split('Follow APOD in English on: ', 1)
+		text = split[0]
 
-	text = text.replace('Notable images submitted to APOD','Notable images submitted to APOD are available via their website.')
-	text = text.replace('Mars 2020 Launch: photos from planet Earth','')
-	text = text.replace('Astrophysicists: Browse 2,200+ codes in the Astrophysics Source Code Library','')
-	text = text.replace('Teachers & Students: Ideas for utilizing APOD in the classroom.','')
-	text = text.replace('Experts Debate: How will humanity first discover extraterrestrial life?','')
+		split = text.split('Get the latest from NASA: ', 1)
+		text = split[0]
+
+		split = text.split(' Gallery: Notable images', 1)
+		text = split[0]
+		
+		split = text.split(' Notable Images ', 1)
+		text = split[0]
+
+		split = text.split(' Notable images ', 1)
+		text = split[0]
+
+		split = text.split(' Today watch: ', 1)
+		text = split[0]
+
+		split = text.split(' Watch: ', 1)
+		text = split[0]
+
+		split = text.split('Notable APOD Submissions:', 1)
+		text = split[0]
+
+		split = text.split('Moon Occults Mars:', 1)
+		text = split[0]
+
+		split = text.split('Comet NEOWISE Images: ', 1)
+		text = split[0]
+
+		text = text.replace('Notable images submitted to APOD','Notable images submitted to APOD are available via their website.')
+		text = text.replace('Mars 2020 Launch: photos from planet Earth','')
+		text = text.replace('Astrophysicists: Browse 2,200+ codes in the Astrophysics Source Code Library','')
+		text = text.replace('Teachers & Students: Ideas for utilizing APOD in the classroom.','')
+		text = text.replace('Experts Debate: How will humanity first discover extraterrestrial life?','')
 
 
 
-	split = text.split('An APOD Described on TikTok:', 1)
-	text = split[0]
-	
-	# GET TITLE
-	title = (json['title'])
+		split = text.split('An APOD Described on TikTok:', 1)
+		text = split[0]
+		
+		# GET TITLE
+		title = (json['title'])
 
-	# SET CONTENT
-	content = (date, title, text)
+		# SET CONTENT
+		content = (date, title, text)
 
-	# IF path DOES NOT EXISTS, CREATE IT
-	if not os.path.exists(path):
-		os.makedirs(path)
+		# IF path DOES NOT EXISTS, CREATE IT
+		if not os.path.exists(path):
+			os.makedirs(path)
 
-	# CONSTRUCT PATHS VARS
-	(savein, saveout) = setpaths(path, imageurl, False)
+		# CONSTRUCT PATHS VARS
+		(savein, saveout) = setpaths(path, imageurl, False)
 
-	# DOWNLOAD IMAGE TO FS
-	getimage(imageurl, savein)
+		# DOWNLOAD IMAGE TO FS
+		getimage(imageurl, savein)
 
-	# MAKE AND SAVE IMAGE, IF POSSIBLE
-	# RETURNS PATH TO NEW WALLPAPER
-	wallpaper = setimage(savein, saveout, getscreensize(), content, style)
+		# MAKE AND SAVE IMAGE, IF POSSIBLE
+		# RETURNS PATH TO NEW WALLPAPER
+		wallpaper = setimage(savein, saveout, getscreensize(), content, style)
 
-	# SET IMAGE AS WALLPAPER
-	setwallpaper(wallpaper)
+		# SET IMAGE AS WALLPAPER
+		setwallpaper(wallpaper)
 
-	# NOTIFICATION ABOUT DESKTOP CHANGE
-	if args.notifications:
-		notify(
-			title.replace("'", ""),
-			'Boldly go where only aliens have gone before',
-			'Background image has been set.',
-			'success'
-			)
+		# NOTIFICATION ABOUT DESKTOP CHANGE
+		if args.notifications:
+			notify(
+				title.replace("'", ""),
+				'Boldly go where only aliens have gone before',
+				'Background image has been set.',
+				'success'
+				)
 
 else:
 	
