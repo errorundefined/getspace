@@ -1,18 +1,9 @@
 # GetSpace – APOD wallpaper
 Change your wallpaper to today's Astronomy Picture of the Day, everyday – along with a brief explanation.
 
-## Todo
-- [X] add upscaling (to avoid blurred font rendering)
-- [ ] add support for multi display setups
+## This is work in progress
 
-### OSX
-- [ ] get ```com.apple.desktop.admin.png``` thing to work
-
-### Linux
-- [ ] add ```def dosetbackground(path)```
-- [ ] add ```def getscreensize()```
-- [ ] add ```def getfontvars(height, explanation)```
-- [ ] add cron explanation
+There's a lot to do and help needed, see issues.
 
 ## Readme
 
@@ -22,21 +13,19 @@ Change your wallpaper to today's Astronomy Picture of the Day, everyday – alon
 
 You sould get an API key as this thing here uses the limited ```DEMO_KEY``` – you can do so for free at ([NASA Open APIs](https://api.nasa.gov/index.html#apply-for-an-api-key)). After that, in line 43 of getspace.py, remove ```DEMO_KEY``` and put your API key after ```https://api.nasa.gov/planetary/apod?api_key=```.
 
-#### Pillow (PIL Fork)
+#### Pillow
 
 In order to get information on the current APOD image onto your background image, you need to install ([Pillow](https://python-pillow.org/)) if it is not already shipped with your OS. If this is not done, the image (without info) is still being set as the new desktop background.
 
+Note that this is still Python 2.x: At some point we will move to Python 3.x, but until then note that you use the correct Python env/Pillow version.
+
 #### OSX
 
-Most of the times:
-
-```$ sudo easy_install pip```
-
-```$ (sudo) pip install Pillow```
+```$ python -m pip install Pillow```
 
 #### Linux
 
-Use native operating system package manager to install PIL/Pillow ([comp. the Pillow Docs](http://pillow.readthedocs.io/en/latest/installation.html#linux-installation)), for example:
+Use native operating system package manager to install Pillow ([comp. the Pillow Docs](http://pillow.readthedocs.io/en/latest/installation.html#linux-installation)), for example:
 
 ```$ apt-get install python-pillow```
 
