@@ -17,7 +17,7 @@ You sould get an API key as this thing here uses the limited ```DEMO_KEY``` – 
 
 In order to get information on the current APOD image onto your background image, you need to install ([Pillow](https://python-pillow.org/)) if it is not already shipped with your OS. If this is not done, the image (without info) is still being set as the new desktop background.
 
-Note that this is still Python 2.x: At some point we will move to Python 3.x, but until then note that you use the correct Python env/Pillow version.
+Note that this is still Python 2.x: At some point we will move to Python 3.x, but until then note that you have to use the correct Python env/Pillow version.
 
 #### OSX
 
