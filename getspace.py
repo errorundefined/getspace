@@ -183,6 +183,9 @@ if media_type == 'video' or media_type == 'image':
 
 		split = text.split(' Gallery: Notable images', 1)
 		text = split[0]
+
+		split = text.split(' APOD in world languages: ', 1)
+		text = split[0]
 		
 		split = text.split(' Notable Images ', 1)
 		text = split[0]
