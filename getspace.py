@@ -168,56 +168,36 @@ if media_type == 'video' or media_type == 'image':
 		# text = text.replace(' - ',' -- ').decode('utf-8')
 		# text = text.replace('--',u'\u2E3A')
 
-		text = text.replace('Explore the Universe: Random APOD Generator','')
-		text = text.replace('Almost Hyperspace: Random APOD Generator','')
-		text = text.replace('Portal Universe: Random APOD Generator','')
+		stringdeleters = ['Explore the Universe: Random APOD Generator',
+				'Almost Hyperspace: Random APOD Generator',
+				'Portal Universe: Random APOD Generator',
+				'Mars 2020 Launch: photos from planet Earth',
+				'Astrophysicists: Browse 2,200+ codes in the Astrophysics Source Code Library',
+				'Teachers & Students: Ideas for utilizing APOD in the classroom.',
+				'Experts Debate: How will humanity first discover extraterrestrial life?'
+			]
+		for string in stringdeleters:
+			text = text.replace(string,'')
 
-		split = text.split('Follow APOD on: ', 1)
-		text = split[0]
-
-		split = text.split('Follow APOD in English on: ', 1)
-		text = split[0]
-
-		split = text.split('Get the latest from NASA: ', 1)
-		text = split[0]
-
-		split = text.split(' Gallery: Notable images', 1)
-		text = split[0]
-
-		split = text.split(' APOD in world languages: ', 1)
-		text = split[0]
-		
-		split = text.split(' Notable Images ', 1)
-		text = split[0]
-
-		split = text.split(' Notable images ', 1)
-		text = split[0]
-
-		split = text.split(' Today watch: ', 1)
-		text = split[0]
-
-		split = text.split(' Watch: ', 1)
-		text = split[0]
-
-		split = text.split('Notable APOD Submissions:', 1)
-		text = split[0]
-
-		split = text.split('Moon Occults Mars:', 1)
-		text = split[0]
-
-		split = text.split('Comet NEOWISE Images: ', 1)
-		text = split[0]
+		stringmarkers = ['Follow APOD on: ',
+				'Follow APOD in English on: ',
+				'Get the latest from NASA: ',
+				' Gallery: Notable images',
+				' APOD in world languages: ',
+				' Notable Images ',
+				' Notable images ',
+				' Today watch: ',
+				' Watch: ',
+				'Notable APOD Submissions:',
+				'Moon Occults Mars:',
+				'Comet NEOWISE Images: ',
+				'An APOD Described on TikTok:'
+			]
+		for string in stringmarkers:
+			split = text.split(string, 1)
+			text = split[0]
 
 		text = text.replace('Notable images submitted to APOD','Notable images submitted to APOD are available via their website.')
-		text = text.replace('Mars 2020 Launch: photos from planet Earth','')
-		text = text.replace('Astrophysicists: Browse 2,200+ codes in the Astrophysics Source Code Library','')
-		text = text.replace('Teachers & Students: Ideas for utilizing APOD in the classroom.','')
-		text = text.replace('Experts Debate: How will humanity first discover extraterrestrial life?','')
-
-
-
-		split = text.split('An APOD Described on TikTok:', 1)
-		text = split[0]
 		
 		# GET TITLE
 		title = (json['title'])
