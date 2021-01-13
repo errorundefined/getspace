@@ -184,6 +184,7 @@ if media_type == 'video' or media_type == 'image':
 				'Get the latest from NASA: ',
 				' Gallery: Notable images',
 				' APOD in world languages: ',
+				' APOD Year in Review ',
 				' Notable Images ',
 				' Notable images ',
 				' Today watch: ',
