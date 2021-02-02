@@ -185,6 +185,7 @@ if media_type == 'video' or media_type == 'image':
 				' Gallery: Notable images',
 				' APOD in world languages: ',
 				' APOD Year in Review ',
+				' APOD is available ',
 				' Notable Images ',
 				' Notable images ',
 				' Today watch: ',
